@@ -1,83 +1,45 @@
 # External Dependencies Catalog
 
-Назначение: единая точка, где фиксируются внешние библиотеки и инструменты,
-разрешённые/используемые в `kodex`.
+Назначение: шаблон каталога внешних библиотек и инструментов для конкретного проекта.
+
+Этот документ не задаёт универсальный фиксированный список зависимостей для всех проектов. Каждая команда должна адаптировать каталог под свой стек, риски и эксплуатационные требования.
 
 ## Правила ведения
 
-- Любая новая внешняя зависимость сначала добавляется в этот каталог.
+- Любая новая внешняя зависимость сначала добавляется в этот каталог проекта.
 - Для каждой зависимости фиксируются:
   - где используется;
   - зачем нужна;
   - есть ли альтернатива;
-  - кто владелец решения (роль/команда).
-- Для Go зависимости версия фиксируется в `go.mod`; для JS/Vue — в `package.json`.
-- Если зависимость удалена, запись не удаляется молча, а переводится в `deprecated` с датой.
+  - кто владелец решения (роль/команда);
+  - какие есть риски по безопасности, лицензии и сопровождению.
+- Версия зависимости фиксируется в нативном manifest или lock-файле выбранного стека.
+- Если зависимость удалена, запись не удаляется молча, а переводится в `deprecated` с датой и причиной.
 
-## Backend (Go) — in use
+## Рекомендуемая структура каталога
 
-| Dependency | Version | Scope | Why |
-|---|---|---|---|
-| `github.com/labstack/echo/v5` | `v5.0.3` | HTTP transport | единый REST стек для gateway/staff API |
-| `github.com/getkin/kin-openapi` | `v0.133.0` | OpenAPI validation | загрузка/валидация OpenAPI и runtime request-validation в `api-gateway` |
-| `github.com/oapi-codegen/runtime` | `v1.1.2` | OpenAPI generated transport runtime | типы/утилиты для сгенерированного OpenAPI Go-кода |
-| `github.com/prometheus/client_golang` | `v1.23.2` | Observability | `/metrics` и базовые метрики сервиса |
-| `github.com/jackc/pgx/v5` | `v5.8.0` | PostgreSQL driver | доступ к PostgreSQL |
-| `github.com/google/uuid` | `v1.6.0` | Utility | генерация идентификаторов |
-| `github.com/caarlos0/env/v11` | `v11.3.1` | Config | типобезопасный env->struct парсинг конфигурации |
-| `github.com/golang-jwt/jwt/v5` | `v5.3.0` | Auth | выпуск и валидация short-lived JWT для staff API |
-| `golang.org/x/crypto` | `v0.47.0` | Security | sealed-box шифрование значений для GitHub repository secrets (`CreateOrUpdateRepoSecret`) |
-| `k8s.io/client-go` | `v0.35.0` | Kubernetes integration | запуск/проверка Job через Kubernetes SDK |
-| `k8s.io/api` | `v0.35.0` | Kubernetes API types | типы `batch/v1`, `core/v1` для Job/Pod |
-| `k8s.io/apimachinery` | `v0.35.0` | Kubernetes API machinery | ошибки API, meta types, утилиты client-go |
-| `github.com/google/go-github/v82` | `v82.0.0` | Repository provider (GitHub) | настройка вебхуков и валидация доступа к репозиториям через GitHub API v3 |
-| `github.com/google/go-querystring` | `v1.2.0` | Dependency of go-github | сериализация query params для GitHub API клиента |
-| `google.golang.org/grpc` | `v1.78.0` | Internal transport | внутреннее service-to-service взаимодействие (`api-gateway` -> `control-plane`) |
-| `google.golang.org/protobuf` | `v1.36.10` | Internal contracts | protobuf runtime для gRPC контрактов и сгенерированного кода в `proto/gen/go/**` |
-| `google.golang.org/genproto/googleapis/rpc` | `v0.0.0-20251029180050-ab9386a59fda` | gRPC error details | типизированные `errdetails` для conflict/status metadata во внутренних gRPC callback-ах |
-| `github.com/modelcontextprotocol/go-sdk` | `v1.3.0` | MCP transport | встроенный StreamableHTTP MCP transport/auth/resource/tool runtime для `control-plane` |
-| `github.com/openai/openai-go/v3` | `v3.28.0` | Sprint S11 Telegram adapter voice STT | официальный OpenAI Go SDK для speech-to-text в `telegram-interaction-adapter`; используется для voice reply transcription после `ffmpeg` normalization |
+### Backend
 
-## Backend (Go) — planned baselines
+| Dependency | Version | Scope | Why | Alternatives | Owner |
+|---|---|---|---|---|---|
+| `<module>` | `<version>` | `<service/contour>` | `<why>` | `<alternative or n/a>` | `<team/role>` |
 
-| Dependency | Version | Scope | Why |
-|---|---|---|---|
-| `github.com/mymmrac/telego` | `v1.7.0` | Sprint S11 Telegram adapter (`adopted` в `go.mod`) | pragmatic Telegram Bot API SDK baseline для webhook mode, inline keyboards и callback queries; используется в platform-owned Telegram adapter contour для webhook/auth, callback acknowledgement и Bot API mediation |
+### Frontend
 
-## Frontend (Vue/TS) — in use
+| Dependency | Version | Scope | Why | Alternatives | Owner |
+|---|---|---|---|---|---|
+| `<package>` | `<version>` | `<app/feature>` | `<why>` | `<alternative or n/a>` | `<team/role>` |
 
-| Dependency | Status | Scope | Why |
-|---|---|---|---|
-| `vue` | in use (package.json) | UI framework | staff web-console |
-| `vue-router` | in use (package.json) | Routing | маршрутизация staff UI |
-| `pinia` | in use (package.json) | State management | минимальное состояние UI |
-| `axios` | in use (package.json) | HTTP client | вызовы staff/private API |
-| `vue-i18n` | in use (package.json) | i18n | все пользовательские тексты через i18n ключи |
-| `vue3-cookies` | in use (package.json) | Cookies | хранение UI-настроек (например, язык) и единый cookie-адаптер |
-| `date-fns` | in use (package.json) | Datetime formatting | безопасное форматирование дат/времени без самописных helpers |
-| `vuetify` | in use (package.json, `^3.11.8`) | UI components | единая UI-библиотека и app-shell для staff web-console |
-| `vite-plugin-vuetify` | in use (devDependency, `^2.1.3`) | Build tooling | Vite-интеграция Vuetify (auto-import/стили) |
-| `sass` | in use (devDependency, `^1.97.3`) | Build tooling | сборка Vuetify styles (Sass) в Vite |
-| `@mdi/font` | in use (package.json, `^7.4.47`) | Icons | базовый icon font для Vuetify (Material Design Icons) |
-| `monaco-editor` | in use (package.json, `^0.55.1`) | Editor | markdown и YAML редакторы (и только для них) в staff web-console |
-| `@hey-api/openapi-ts` | in use (devDependency, `v0.92.3`) | OpenAPI codegen (TS) | генерация typed API-клиента для frontend из `api.yaml` |
-| `@hey-api/client-axios` | deprecated (bundled in `@hey-api/openapi-ts` since `v0.73.0`) | OpenAPI axios client plugin | отдельная установка не требуется, использовать встроенный плагин через конфиг `openapi-ts` |
+### Infrastructure and CI tools
 
-## Infrastructure and CI tools — in use
-
-| Tool | Scope | Why |
-|---|---|---|
-| `gh` CLI | operator diagnostics | ручная проверка GitHub run/status/logs в troubleshooting сценариях |
-| `kubectl` | operator diagnostics | ручная диагностика k8s ресурсов и логов вне runtime API |
-| `openssl` | bootstrap scripts | генерация секретов |
-| `kaniko` | CI build pipeline | сборка образа внутри кластера |
-| `@openai/codex` (CLI) | `services/jobs/agent-runner` runtime | выполнение `codex exec`/`resume` в агентном Job-контуре Day4 |
-| `github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen` | Make codegen pipeline | генерация Go transport-артефактов из OpenAPI |
+| Tool | Version | Scope | Why | Alternatives | Owner |
+|---|---|---|---|---|---|
+| `<tool>` | `<version>` | `<pipeline/runtime>` | `<why>` | `<alternative or n/a>` | `<team/role>` |
 
 ## Процесс изменений каталога
 
 - PR с новой зависимостью должен обновлять:
   - этот файл;
-  - релевантный гайд (`go/libraries.md`, `vue/libraries.md` и т.п.);
-  - технические артефакты (`go.mod`, `package.json`, workflow/bootstrap при необходимости).
+  - релевантный технологический гайд или локальный overlay проекта;
+  - технические артефакты выбранного стека: manifest/lock-файлы, CI/bootstrap/deploy-конфигурацию при необходимости.
 - Без обновления каталога изменение считается неполным.
