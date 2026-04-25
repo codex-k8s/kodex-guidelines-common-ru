@@ -7,8 +7,8 @@
 - Зона выбрана корректно: `internal|external|staff|jobs|dev` (см. `project_architecture.md`).
 - Для `external|staff` edge остаётся thin-edge (валидация/auth/маршрутизация), без доменной логики backend.
 - Перед написанием кода перечитаны профильные гайды по размещению:
-  - backend: `github.com/codex-k8s/kodex-guidelines-go/services_design_requirements.md`;
-  - frontend: `github.com/codex-k8s/kodex-guidelines-vue/frontend_architecture.md`, `github.com/codex-k8s/kodex-guidelines-vue/frontend_code_rules.md`, `github.com/codex-k8s/kodex-guidelines-vue/frontend_data_and_state.md`;
+  - backend: `github.com/codex-k8s/kodex-guidelines-go-ru/services_design_requirements.md`;
+  - frontend: `github.com/codex-k8s/kodex-guidelines-vue-ru/frontend_architecture.md`, `github.com/codex-k8s/kodex-guidelines-vue-ru/frontend_code_rules.md`, `github.com/codex-k8s/kodex-guidelines-vue-ru/frontend_data_and_state.md`;
   - общие принципы: `design_principles.md`.
 - Контракты транспорта не “вшиты в код строками” и имеют источник правды:
   - gRPC: целевой `proto/` после его повторного создания (версионирование/совместимость)
@@ -55,7 +55,7 @@
   они оформлены через typed platform settings catalog с явными reload semantics и audit trail.
 
 ## Профильные чек-листы
-- Если PR затрагивает Go: выполнен `github.com/codex-k8s/kodex-guidelines-go/check_list.md`.
-- Если PR затрагивает Vue: выполнен `github.com/codex-k8s/kodex-guidelines-vue/check_list.md`.
+- Если PR затрагивает Go: выполнен `github.com/codex-k8s/kodex-guidelines-go-ru/check_list.md`.
+- Если PR затрагивает Vue: выполнен `github.com/codex-k8s/kodex-guidelines-vue-ru/check_list.md`.
 - Если PR затрагивает Go: выполнен `go mod tidy` в изменённых модулях и прогнаны `make lint-go` и `make dupl-go` (или `make lint`) с устранением нарушений.
 - Перед пушем выполнена повторная сверка с релевантными чек-листами и устранены все нарушения по размещению моделей/типов/констант/helper-кода.
