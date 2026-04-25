@@ -13,6 +13,12 @@
 
 ## Использование
 
-До внедрения штатного импорта руководящих пакетов основной репозиторий `github.com/codex-k8s/kodex` хранит локальную копию этих файлов в `**`.
+До внедрения штатного импорта руководящих пакетов основной репозиторий `github.com/codex-k8s/kodex` хранит локальную копию этих файлов в `docs/design-guidelines/common/**`.
 
 Изменения в этом репозитории и локальной копии в `kodex` должны синхронизироваться в одном рабочем срезе.
+
+## Связанные репозитории
+
+- `github.com/codex-k8s/kodex` — основная платформа.
+- `github.com/codex-k8s/kodex-guidelines-go` — правила для Go backend.
+- `github.com/codex-k8s/kodex-guidelines-vue` — правила для Vue и TypeScript frontend.
