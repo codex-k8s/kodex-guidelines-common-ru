@@ -4,12 +4,12 @@
 
 ## Общее
 - Не размыты доменные границы: один сервис/приложение = один bounded context; нет “service-олигарха”.
-- Зона выбрана корректно: `internal|external|staff|jobs|dev` (см. `docs/design-guidelines/common/project_architecture.md`).
+- Зона выбрана корректно: `internal|external|staff|jobs|dev` (см. `project_architecture.md`).
 - Для `external|staff` edge остаётся thin-edge (валидация/auth/маршрутизация), без доменной логики backend.
 - Перед написанием кода перечитаны профильные гайды по размещению:
-  - backend: `docs/design-guidelines/go/services_design_requirements.md`;
-  - frontend: `docs/design-guidelines/vue/frontend_architecture.md`, `docs/design-guidelines/vue/frontend_code_rules.md`, `docs/design-guidelines/vue/frontend_data_and_state.md`;
-  - общие принципы: `docs/design-guidelines/common/design_principles.md`.
+  - backend: `github.com/codex-k8s/kodex-guidelines-go/services_design_requirements.md`;
+  - frontend: `github.com/codex-k8s/kodex-guidelines-vue/frontend_architecture.md`, `github.com/codex-k8s/kodex-guidelines-vue/frontend_code_rules.md`, `github.com/codex-k8s/kodex-guidelines-vue/frontend_data_and_state.md`;
+  - общие принципы: `design_principles.md`.
 - Контракты транспорта не “вшиты в код строками” и имеют источник правды:
   - gRPC: целевой `proto/` после его повторного создания (версионирование/совместимость)
   - HTTP: OpenAPI YAML
@@ -37,7 +37,7 @@
 - Вынос общего кода в целевой `libs/*` оправдан (>= 2 потребителя); нет “god-lib”.
 - Новый production-код не размещён внутри устаревших или архивных каталогов.
 - Если добавлена/обновлена внешняя зависимость, обновлён
-  `docs/design-guidelines/common/external_dependencies_catalog.md`.
+  `external_dependencies_catalog.md`.
 - Для русскоязычных документов, PR и комментариев проверено отсутствие лишней смеси русского и английского; английские термины оставлены только там, где они действительно нужны как точные технические идентификаторы.
 
 ## Специфика kodex
@@ -55,7 +55,7 @@
   они оформлены через typed platform settings catalog с явными reload semantics и audit trail.
 
 ## Профильные чек-листы
-- Если PR затрагивает Go: выполнен `docs/design-guidelines/go/check_list.md`.
-- Если PR затрагивает Vue: выполнен `docs/design-guidelines/vue/check_list.md`.
+- Если PR затрагивает Go: выполнен `github.com/codex-k8s/kodex-guidelines-go/check_list.md`.
+- Если PR затрагивает Vue: выполнен `github.com/codex-k8s/kodex-guidelines-vue/check_list.md`.
 - Если PR затрагивает Go: выполнен `go mod tidy` в изменённых модулях и прогнаны `make lint-go` и `make dupl-go` (или `make lint`) с устранением нарушений.
 - Перед пушем выполнена повторная сверка с релевантными чек-листами и устранены все нарушения по размещению моделей/типов/констант/helper-кода.

@@ -46,5 +46,5 @@
 - делать “god-lib” без чёткой ответственности и владельца.
 
 Профильные требования по языкам:
-- Go: `docs/design-guidelines/go/libraries.md`.
-- Vue/TS: `docs/design-guidelines/vue/libraries.md`.
+- Go: `github.com/codex-k8s/kodex-guidelines-go/libraries.md`.
+- Vue/TS: `github.com/codex-k8s/kodex-guidelines-vue/libraries.md`.
