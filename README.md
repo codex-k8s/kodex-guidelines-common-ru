@@ -20,5 +20,3 @@
 ## Связанные репозитории
 
 - `github.com/codex-k8s/kodex` — основная платформа.
-- `github.com/codex-k8s/kodex-guidelines-go-ru` — правила для Go backend.
-- `github.com/codex-k8s/kodex-guidelines-vue-ru` — правила для Vue и TypeScript frontend.
